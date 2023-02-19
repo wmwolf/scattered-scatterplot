@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>D3: Empty page template</title>
-		<script type="text/javascript" src="d3.js"></script>
-	</head>
-	<body>
-		<script type="text/javascript">
-			// Your beautiful D3 code will go here
-		</script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>D3: Empty page template</title>
+    <script type="text/javascript" src="d3.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      d3.select("body")
+        .append("h1")
+        .text("Circular Forms")
+        .style("color", "blue");
+      d3.select("body")
+        .append("p")
+        .text("Where are they? I was promised crazy circles and also data.")
+        .style("color", "purple");
+    </script>
+  </body>
 </html>
