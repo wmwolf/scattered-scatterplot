@@ -3,18 +3,30 @@
   <head>
     <meta charset="utf-8" />
     <title>D3: Empty page template</title>
-    <script type="text/javascript" src="d3.js"></script>
+    <script src="d3.js"></script>
   </head>
   <body>
-    <script type="text/javascript">
-      d3.select("body")
-        .append("h1")
-        .text("Circular Forms")
-        .style("color", "blue");
-      d3.select("body")
-        .append("p")
-        .text("Where are they? I was promised crazy circles and also data.")
-        .style("color", "purple");
+    <script>
+      const body = d3.select("body");
+      const svg = body.append("svg").attr("width", 500).attr("height", 400);
+      svg
+        .append("circle")
+        .attr("cx", 150)
+        .attr("cy", 75)
+        .attr("r", 50)
+        .attr("fill", "blue");
+      svg
+        .append("circle")
+        .attr("cx", 300)
+        .attr("cy", 75)
+        .attr("r", 50)
+        .attr("fill", "blue");
+      svg
+        .append("circle")
+        .attr("cx", 225)
+        .attr("cy", 225)
+        .attr("r", 100)
+        .attr("fill", "red");
     </script>
   </body>
 </html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>D3: Empty page template</title>
+    <script src="d3.js"></script>
+  </head>
+  <body>
+    <div>
+      <button type="button">Select File</button>
+    </div>
+    <script>
+      // const body = d3.select("body");
+      // const svg = body.append("svg").attr("width", 500).attr("height", 400);
+      // svg
+      //   .append("circle")
+      //   .attr("cx", 150)
+      //   .attr("cy", 75)
+      //   .attr("r", 50)
+      //   .attr("fill", "blue");
+      // svg
+      //   .append("circle")
+      //   .attr("cx", 300)
+      //   .attr("cy", 75)
+      //   .attr("r", 50)
+      //   .attr("fill", "blue");
+      // svg
+      //   .append("circle")
+      //   .attr("cx", 225)
+      //   .attr("cy", 225)
+      //   .attr("r", 100)
+      // .attr("fill", "red");
+      let contents;
+      let data;
+
+      async function getFile() {
+        // open file picker
+        let [fileHandle] = await window.showOpenFilePicker();
+        // Note: to select a directory, use showDirectoryPicker
+        let fileData = await fileHandle.getFile();
+        data = process_data(await fileData.text());
+        return data;
+      }
+
+      // convert MESA output (history or profile) into javascript object
+      process_data = (file_contents) => {
+        let headerData = {};
+        let bulkData = {};
+        contents = file_contents.trim();
+        lines = contents.trim().split("\n");
+        lines[1]
+          .trim()
+          .split(/\s+/)
+          .forEach((key, i) => {
+            headerData[key] = lines[2].trim().split(/\s+/)[i].replace(/"/g, "");
+          });
+        const bulkNames = lines[5].trim().split(/\s+/);
+        let bulkColumns = [];
+        bulkNames.forEach((name, k) => {
+          bulkColumns.push([]);
+        });
+        console.log(bulkColumns[0]);
+        lines.slice(6).forEach((line, k) => {
+          line
+            .trim()
+            .split(/\s+/)
+            .forEach((datum, i) => {
+              console.log(`i = ${i}, k = ${k}`);
+              bulkColumns[i][k] = parseFloat(datum);
+            });
+        });
+        bulkNames.forEach((key, i) => {
+          bulkData[key] = bulkColumns[i];
+        });
+
+        return { header: headerData, bulk: bulkData };
+      };
+
+      d3.select("button").on("click", () => {
+        getFile().then((result) => {
+          data = result;
+        });
+      });
+    </script>
+  </body>
+</html>
